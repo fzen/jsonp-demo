@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">hahahaha</button>
+    <script>
+        document.querySelector('#btn').addEventListener('click',function(){
+            let callbackName = 'haha'+parseInt(Math.random()*100000)
+            window[callbackName] = function(response){
+                alert('hahahahahaha')
+                alert('success')
+            }
+            let scriptTag = document.createElement('script')
+            scriptTag.src = 'http://localhost:8002/ss?callback='+callbackName
+            document.body.appendChild(scriptTag)
+            scriptTag.onload = function(e){
+                e.currentTarget.remove()
+                delete window.callbackName
+            }
+            scriptTag.onerror = function(e){
+                alert('failed')
+                e.currentTarget.remove()
+                delete window.callbackName
+            }
+        })
+    </script>
+</body>
+</html>
